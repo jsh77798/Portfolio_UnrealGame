@@ -66,13 +66,13 @@ void UBTTask_RETURN::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 	if (nullptr == NavPath)
 	{
-		SetStateChange(OwnerComp, AIState::DEATH);
+		SetStateChange(OwnerComp, AIState::IDLE);
 		return;
 	}
 
 	if (nullptr != NavPath && 1 >= NavPath->PathPoints.Num())
 	{
-		SetStateChange(OwnerComp, AIState::DEATH);
+		SetStateChange(OwnerComp, AIState::IDLE);
 		return;
 	}
 
