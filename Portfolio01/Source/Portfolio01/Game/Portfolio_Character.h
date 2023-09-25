@@ -21,6 +21,16 @@ public:
 	// Sets default values for this character's properties
 	APortfolio_Character();
 
+	UPROPERTY(Category = "Bullet", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	int Bullet = 0;
+
+	UFUNCTION(BlueprintPure, Category = "Character")
+	float GetCharacterBullet() const
+	{
+		return Bullet; // Health는 ACharacter 클래스의 멤버 변수로 가정
+	}
+
+
 	// PlayerData에서 데미지 값 가져오기
 	UPROPERTY(Category = "ATT", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	FName PlayerDataName = "NONE";

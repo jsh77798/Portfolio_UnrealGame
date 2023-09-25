@@ -51,6 +51,7 @@ void APortfolio_Character::BeginPlay()
 
 	Super::BeginPlay();
 
+
 	// PlayerData에서 공격력을 가져와 저장한다
 	UPortfolio_GameInstance* Inst = GetWorld()->GetGameInstance<UPortfolio_GameInstance>();
 	if (nullptr != Inst)
@@ -59,6 +60,7 @@ void APortfolio_Character::BeginPlay()
 	}
 	PlayerAtt = CurPlayerData->ATT;
 
+	CurPlayerData->Bullet = 6;
 	Damage(PlayerAtt);
 
 	GetGlobalAnimInstance()->OnMontageBlendingOut.AddDynamic(this, &APortfolio_Character::MontageEnd);
@@ -74,6 +76,11 @@ void APortfolio_Character::Tick(float DeltaTime)
 	CameraForward = camera->GetForwardVector();
 
 	AniStateValue = GetAniState<EAniState>();
+
+	Bullet = CurPlayerData->Bullet;
+
+
+
 
 	//Run 상태확인 및 설정
 	{
@@ -126,7 +133,7 @@ void APortfolio_Character::Tick(float DeltaTime)
 				SetAniState(EAniState::W_Attack);
 
 				//AimingAttack();
-
+				CurPlayerData->Bullet -= 1;
 			    AttackCheck= 0;
 	        }
  
@@ -458,9 +465,13 @@ void APortfolio_Character::AttackAction()
 		AniState = EAniState::W_Attack;
     }
 	*/
+	int _Bullet = CurPlayerData->Bullet;
 
-	//Tick에서 공격
-	AttackCheck = 1;
+	if (_Bullet != 0 ) 
+	{
+		//Tick에서 공격
+		AttackCheck = 1;
+	}
 	return;
 }
 

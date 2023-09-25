@@ -4,6 +4,7 @@
 #include "UI/Portfolio_Widget_Main.h"
 #include "UI/Portfolio_Widget_Inventory.h"
 #include "Game/Portfolio_Character.h"
+#include <Global/Data/PlayerData.h>
 #include "Global/Portfolio_GlobalCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Game/Portfolio_Enums.h"
@@ -20,6 +21,7 @@ void UPortfolio_Widget_Main::NativeConstruct()
 	AllWidGet.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("WBP_UI_MiniMap"))));
 	AllWidGet.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("WBP_UI_Option"))));
 	AllWidGet.Add(Cast<UUserWidget>(GetWidgetFromName(TEXT("WBP_UI_BackGround"))));
+
 }
 
 void UPortfolio_Widget_Main::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -68,4 +70,11 @@ bool UPortfolio_Widget_Main::CheckRangeItem()
 {
 	
 	return true;
+}
+
+int UPortfolio_Widget_Main::SetMyCharacter()
+{
+	APortfolio_Character* MyCharacter = Cast<APortfolio_Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	int _Bullet = MyCharacter->Bullet;
+	return _Bullet;
 }

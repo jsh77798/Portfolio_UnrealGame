@@ -62,6 +62,7 @@ void UPortfolio_Widget_InventorySlot::SlotDataCheck()
 			ItemCountVisibility = ESlateVisibility::Hidden;
 		}
 	}
+
 }
 
 void UPortfolio_Widget_InventorySlot::DragSetting(UPortfolio_Widget_InventorySlot* _OtherDragSlot)

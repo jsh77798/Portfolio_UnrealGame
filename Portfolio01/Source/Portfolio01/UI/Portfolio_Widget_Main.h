@@ -15,6 +15,50 @@ class PORTFOLIO01_API UPortfolio_Widget_Main : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	// ACharacter에 대한 참조
+	//UPROPERTY(BlueprintReadOnly)
+	//APortfolio_Character* MyCharacter;
+
+	UFUNCTION(BlueprintCallable)
+	int SetMyCharacter();
+	
+
+	//YourUserWidget->SetMyCharacter(GetOwningPlayerPawn());
+
+	// 체력 값을 얻어옴
+	//float CharacterHealth = YourUserWidget->MyCharacter->GetCharacterHealth();
+
+	/*
+	UFUNCTION(BlueprintCallable)
+	int LoadTableRowData()
+	{
+		static ConstructorHelpers::FObjectFinder<UDataTable> DataTableAsset(TEXT("/Script/Engine.DataTable'/Game/BluePrint/Character_Player/DT_PlayerData.DT_PlayerData'"));
+		if (DataTableAsset.Succeeded())
+		{
+			UDataTable* MyDataTable = DataTableAsset.Object;
+
+			// 이제 MyDataTable을 사용하여 데이터를 읽을 수 있습니다.
+			FPlayerData* MyDataRow = MyDataTable->FindRow<FPlayerData>(FName(TEXT("DT_PlayerData")), TEXT(""));
+			if (MyDataRow)
+			{
+				int32 BulletCount = MyDataRow->Bullet;
+		        return BulletCount;
+			}
+		}
+	}
+	*/
+/*
+	const int bullet = 1;
+	FLinker* Src;
+
+	UFUNCTION(BlueprintCallable)
+	int SetCulBulletData()
+	{
+	    struct FPlayerData* CurPlayerData = Cast< FPlayerData>(Src);
+		int Bullt = CurPlayerData->Bullet;
+		return Bullt;
+	}
+*/
 	UFUNCTION(BlueprintCallable)
 		bool CheckAllWidGetHidden();
 
