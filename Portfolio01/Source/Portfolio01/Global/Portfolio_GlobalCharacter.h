@@ -187,7 +187,7 @@ private:
 	class UPortfolio_GlobalAnimInstance* Portfolio_GlobalAnimInstance = nullptr;
 
 	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		int HP = 1000;
+		int HP = 1500;
 
 	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName BoneName;
