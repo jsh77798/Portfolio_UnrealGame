@@ -18,6 +18,7 @@ class PORTFOLIO01_API UBTTask_ATTACK : public UBTTask_AIBase
 
 		UBTTask_ATTACK();
 
+
 protected:
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 

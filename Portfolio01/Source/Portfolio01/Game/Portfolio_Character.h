@@ -117,6 +117,9 @@ public:
 
 	EAniState AniStateValue;
 
+	UPROPERTY(Category = "AttackHitCheck", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	    bool AttackHitCheck;
+
 	UPROPERTY(Category = "Components", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TMap<EAniState, class UAnimMontage*> MapAnimation;
 
@@ -125,6 +128,8 @@ public:
 
 	UFUNCTION()
 		void AnimNotifyBegin(FName NotifyName, const FBranchingPointNotifyPayload& BranchingPointPayload);
+
+    
 
 	float Speed = 1500.0f;
 

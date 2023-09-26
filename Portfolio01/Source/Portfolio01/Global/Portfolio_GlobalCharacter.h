@@ -25,6 +25,7 @@ public:
 	UPROPERTY(Category = "RangeATT", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName RangeAttDataName = "NONE";
 
+
 	//struct APortfolio_Tile* CurData;
 	struct FTileData* CurData;
 
@@ -122,6 +123,27 @@ public:
 		MgrComponent.Add(_Component);
 	}
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
+		bool AttackAnimCheck = false;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
+	    bool DamageCheck = false;
+
+	UFUNCTION()
+	bool GetHit() 
+	{
+		if (DamageCheck == true) 
+		{
+			return AttackAnimCheck;
+		}
+		return false;
+	}
+
+	UFUNCTION()
+	void SetAttackAnimcheck(bool _AttackAnimCheck) 
+	{
+		AttackAnimCheck = _AttackAnimCheck;
+	}
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
@@ -154,12 +176,18 @@ protected:
 
     
 	UFUNCTION()
-		void OverLap(class UPrimitiveComponent* OverlappedComponent,
+		void BeginOverLap(class UPrimitiveComponent* OverlappedComponent,
 			class AActor* OtherActor,
 			class UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
-    
+
+	UFUNCTION()
+		void EndOverLap(UPrimitiveComponent* OverlappedComponent,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex);
+		
 
 	virtual void Damage(int _Att)
 	{
@@ -188,6 +216,9 @@ private:
 
 	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		int HP = 1500;
+
+	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		int PlayerHP = 1000;
 
 	UPROPERTY(Category = "GlobalChracterValue", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FName BoneName;

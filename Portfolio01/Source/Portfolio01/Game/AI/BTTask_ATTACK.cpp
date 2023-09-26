@@ -22,14 +22,18 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	if (RandomNumber == 1)
 	{
 		GetGlobalCharacter(OwnerComp)->SetAniState(AIState::ATTACK);
+		GetGlobalCharacter(OwnerComp)->SetAttackAnimcheck(true);
+		
 	}
 	if (RandomNumber == 2)
 	{
 		GetGlobalCharacter(OwnerComp)->SetAniState(AIState::ATTACK2);
+		GetGlobalCharacter(OwnerComp)->SetAttackAnimcheck(true);
 	}
 	if (RandomNumber == 3)
 	{
 		GetGlobalCharacter(OwnerComp)->SetAniState(AIState::ATTACK3);
+		GetGlobalCharacter(OwnerComp)->SetAttackAnimcheck(true);
 	}
 	//GetGlobalCharacter(OwnerComp)->SetAniState(UBTTask_AIBase::GetAiState(OwnerComp));
 
@@ -39,6 +43,7 @@ EBTNodeResult::Type UBTTask_ATTACK::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DelataSeconds)
 {
 	Super::TickTask(OwnerComp, NodeMemory, DelataSeconds);
+	
 
 	if (true == IsDeathCheck(OwnerComp))
 	{
@@ -57,6 +62,8 @@ void UBTTask_ATTACK::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemo
 
 	if (Time <= GetStateTime(OwnerComp))
 	{
+		GetGlobalCharacter(OwnerComp)->SetAttackAnimcheck(false);
 		SetStateChange(OwnerComp, AIState::MOVE);
 	}
 }
+

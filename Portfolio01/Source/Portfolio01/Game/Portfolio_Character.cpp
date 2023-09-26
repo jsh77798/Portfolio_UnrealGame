@@ -79,8 +79,13 @@ void APortfolio_Character::Tick(float DeltaTime)
 
 	Bullet = CurPlayerData->Bullet;
 
-
-
+	{
+	    AttackHitCheck = GetHit();
+		if (AttackHitCheck == true) 
+		{
+			SetAniState(EAniState::Hit);
+		}
+	}
 
 	//Run 상태확인 및 설정
 	{
@@ -586,6 +591,8 @@ void APortfolio_Character::AnimationTick()
 {
 
 }
+
+
 
 /*
 void APortfolio_Character::AimingAttack() 

@@ -29,6 +29,7 @@ enum class EAniState : uint8
 	Crouch_RightMove UMETA(DisplayName = "Crouch_RightMove"),
 	Crouch_ForwardMove UMETA(DisplayName = "Crouch_ForwardMove"),
 	Crouch_BackwardMove UMETA(DisplayName = "Crouch_BackwardMove"),
+	Hit UMETA(DisplayName = "Hit"),
 };
 
 /*
