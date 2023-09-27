@@ -29,7 +29,7 @@ void APortfolio_GlobalCharacter::BeginPlay()
 	Portfolio_GlobalAnimInstance->AllAnimations = AllAnimations;
 
 	GetCapsuleComponent()->OnComponentBeginOverlap.AddDynamic(this, &APortfolio_GlobalCharacter::BeginOverLap);
-	GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &APortfolio_GlobalCharacter::EndOverLap);
+	//GetCapsuleComponent()->OnComponentEndOverlap.AddDynamic(this, &APortfolio_GlobalCharacter::EndOverLap);
 }
 
 // Called every frame
@@ -56,6 +56,7 @@ void APortfolio_GlobalCharacter::BeginOverLap(UPrimitiveComponent* OverlappedCom
 	if (true == OtherComp->ComponentHasTag(TEXT("Damage")))
 	{
 		DamageCheck = true;
+		AttackAnimCheck = true;
 		if (AttackAnimCheck == true)
 		{
 			PlayerHP -= 90;
@@ -64,6 +65,7 @@ void APortfolio_GlobalCharacter::BeginOverLap(UPrimitiveComponent* OverlappedCom
 
 }
 
+/*
 void APortfolio_GlobalCharacter::EndOverLap(UPrimitiveComponent* OverlappedComponent,
 	AActor* OtherActor,
 	UPrimitiveComponent* OtherComp,
@@ -71,7 +73,7 @@ void APortfolio_GlobalCharacter::EndOverLap(UPrimitiveComponent* OverlappedCompo
 {
 	DamageCheck = false;
 }
-
+*/
 float APortfolio_GlobalCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	Att += DamageAmount;

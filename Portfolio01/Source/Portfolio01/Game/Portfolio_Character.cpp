@@ -36,6 +36,7 @@ APortfolio_Character::APortfolio_Character()
 	camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	camera->SetupAttachment(OurCameraSpringArm);
 
+	
 	//Take control of the default Player
 	//AutoPossessPlayer = EAutoReceiveInput::Player0;
 
@@ -51,7 +52,7 @@ void APortfolio_Character::BeginPlay()
 
 	Super::BeginPlay();
 
-
+	
 	// PlayerData에서 공격력을 가져와 저장한다
 	UPortfolio_GameInstance* Inst = GetWorld()->GetGameInstance<UPortfolio_GameInstance>();
 	if (nullptr != Inst)
@@ -80,10 +81,11 @@ void APortfolio_Character::Tick(float DeltaTime)
 	Bullet = CurPlayerData->Bullet;
 
 	{
-	    AttackHitCheck = GetHit();
+        AttackHitCheck = GetHit();
 		if (AttackHitCheck == true) 
 		{
 			SetAniState(EAniState::Hit);
+			SetAttackAnimcheck(false);
 		}
 	}
 
@@ -193,6 +195,19 @@ void APortfolio_Character::MontageEnd(UAnimMontage* Anim, bool _Inter)
 	}
 
 	if (MapAnimation[EAniState::CrouchOff] == Anim)
+	{
+		if (AniStateValue == EAniState::Idle)
+		{
+			return;
+		}
+		else
+		{
+
+			SetAniState(EAniState::Idle);
+		}
+	}
+
+	if (MapAnimation[EAniState::Hit] == Anim)
 	{
 		if (AniStateValue == EAniState::Idle)
 		{
@@ -586,6 +601,7 @@ void APortfolio_Character::Crouch()
 		return;
 	}
 }
+
 
 void APortfolio_Character::AnimationTick()
 {

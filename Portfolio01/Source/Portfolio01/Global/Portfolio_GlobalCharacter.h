@@ -124,10 +124,10 @@ public:
 	}
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
-		bool AttackAnimCheck = false;
+		bool AttackAnimCheck;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pawn", meta = (AllowPrivateAccess = "true"))
-	    bool DamageCheck = false;
+	    bool DamageCheck;
 
 	UFUNCTION()
 	bool GetHit() 
@@ -136,7 +136,7 @@ public:
 		{
 			return AttackAnimCheck;
 		}
-		return false;
+		return AttackAnimCheck;
 	}
 
 	UFUNCTION()
@@ -181,13 +181,14 @@ protected:
 			class UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex,
 			bool bFromSweep, const FHitResult& SweepResult);
+/*
 
 	UFUNCTION()
 		void EndOverLap(UPrimitiveComponent* OverlappedComponent,
 			AActor* OtherActor,
 			UPrimitiveComponent* OtherComp,
 			int32 OtherBodyIndex);
-		
+		*/
 
 	virtual void Damage(int _Att)
 	{
