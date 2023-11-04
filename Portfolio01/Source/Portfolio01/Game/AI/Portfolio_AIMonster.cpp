@@ -66,11 +66,13 @@ void APortfolio_AIMonster::Destroyed()
 
 		// 아이템을 드롭하도록 만들어보자.
 		{
-			// 몬스터 입장에서는 그냥 아이템인지도 알필요가 없고
-			// 그냥 내가 죽을때 어떤 액터를 만들뿐이다.
-			AActor* Actor = GetWorld()->SpawnActor<AActor>(Item);
-			Actor->Tags.Add(TEXT("Item"));
-			Actor->SetActorLocation(GetActorLocation() + RandomPos);
+			/*
+			    // 몬스터 입장에서는 그냥 아이템인지도 알필요가 없고
+			    // 그냥 내가 죽을때 어떤 액터를 만들뿐이다.
+			    AActor* Actor = GetWorld()->SpawnActor<AActor>(Item);
+			    Actor->Tags.Add(TEXT("Item"));
+			    Actor->SetActorLocation(GetActorLocation() + RandomPos);
+			*/
 		}
 	}
 

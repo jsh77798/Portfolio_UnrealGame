@@ -272,7 +272,7 @@ void APortfolio_Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerTurn", EKeys::MouseX, 1.f));
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerLookUp", EKeys::MouseY, -1.f));
 
-		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("item_Get"), EKeys::E));
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("item_Get"), EKeys::X));
 
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerLoad"), EKeys::R));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAiming"), EKeys::RightMouseButton));
