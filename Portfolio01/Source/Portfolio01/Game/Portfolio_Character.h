@@ -24,6 +24,9 @@ public:
 	UPROPERTY(Category = "Bullet", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	int Bullet = 0;
 
+	UPROPERTY(Category = "Bullet", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	int LoadBullet = 0;
+
 	UFUNCTION(BlueprintPure, Category = "Character")
 	float GetCharacterBullet() const
 	{
@@ -41,6 +44,15 @@ public:
 	// 블루프린트에서 호출하게 하려면 기본적으로 public이어야 합니다.
 	UFUNCTION(BlueprintCallable)
 	void AnimationTick();
+
+	UPROPERTY(Category = "input", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	bool GetItem = false;
+
+	bool GetitemCheck = false;
+	bool Item_Get_InputCheck = false;
+
+	//UFUNCTION(BlueprintCallable)
+	//void BulletPlus();
 
 protected:
 	// Called when the game starts or when spawned
@@ -72,10 +84,13 @@ public:
 	void MoveForward(float Val);
 	void TurnAtRate(float Rate);
 	void LookUpAtRate(float Rate);
+	void LoadAction();
 	void IN_AimingAction();
 	void OUT_AimingAction();
 	void AttackAction();
 
+	void item_Get_check();
+	
 	void Run();
 	void Crouch();
 

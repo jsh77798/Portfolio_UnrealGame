@@ -32,12 +32,15 @@ void UPortfolio_Widget_Inventory::NativeConstruct()
 
 	UPortfolio_GameInstance* GameInstance = GetWorld()->GetGameInstance<UPortfolio_GameInstance>();
 
+	/*
 	const TArray<UObject*>& Items = InvenList->GetListItems();
-	for (size_t i = 0; i < 1; i++)
+	for (size_t i = 0; i < 2; i++)
 	{
 		UInventoryItemData* DataObject = Cast<UInventoryItemData>(Items[i]);
 		DataObject->Data = GameInstance->GetRandomItemData();
 	}
+	*/
+	MyVariable = 6;
 }
 
 void UPortfolio_Widget_Inventory::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
@@ -67,11 +70,15 @@ void UPortfolio_Widget_Inventory::NativeTick(const FGeometry& MyGeometry, float 
 		SlotWidget->SlotDataCheck();
 	}
 
+	CheckBulletNum = InvenList->GetNumItems(); 
+	CheckBulletNum += 1;
 
-	for (size_t i = 0; i < 4; i++)
+	for (size_t i = 0; i < 2; i++)
 	{
-		InvenList->GetNumItems();
+		CheckBulletNum = InvenList->GetNumItems();
 	}
+	
+	
 	
 
 }

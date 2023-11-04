@@ -63,7 +63,7 @@ void APortfolio_Character::BeginPlay()
 	}
 	PlayerAtt = CurPlayerData->ATT;
 
-	CurPlayerData->Bullet = 6;
+	CurPlayerData->Bullet = 5;
 	Damage(PlayerAtt);
 
 	GetGlobalAnimInstance()->OnMontageBlendingOut.AddDynamic(this, &APortfolio_Character::MontageEnd);
@@ -81,6 +81,22 @@ void APortfolio_Character::Tick(float DeltaTime)
 	AniStateValue = GetAniState<EAniState>();
 
 	Bullet = CurPlayerData->Bullet;
+	LoadBullet = CurPlayerData->LoadBullet;
+	
+	if (GetItem == true)
+	{
+		GetitemCheck = true;
+	}
+
+	if (GetitemCheck == true && Item_Get_InputCheck == true)
+	{
+		CurPlayerData->Bullet += 1;
+		Item_Get_InputCheck = false;
+	}
+	else 
+	{
+	    Item_Get_InputCheck = false;
+	}
 
 	{
         AttackHitCheck = GetHit();
@@ -133,6 +149,18 @@ void APortfolio_Character::Tick(float DeltaTime)
 		OurCameraSpringArm->SocketOffset.Z = FMath::Lerp<float>(65.0f, C, ZoomFactor);
 	}
 
+	/*
+	UPortfolio_Widget_Inventory* MyWidget = CreateWidget<UPortfolio_Widget_Inventory>(GetWorld(), UPortfolio_Widget_Inventory::StaticClass());
+	if (MyWidget)
+	{
+		// 유저위젯 클래스의 변수 설정
+		//MyWidget->MyVariable = 42;
+
+		// 유저위젯 클래스의 변수 읽기
+		int32 WidgetVariableValue = MyWidget->MyVariable;
+		_Bullet += WidgetVariableValue;
+	}
+	*/
 	//공격에서 AttackCheck == 1이 되면 여기서 공격실행
 	{
 		if (AttackCheck == 1) {
@@ -142,7 +170,7 @@ void APortfolio_Character::Tick(float DeltaTime)
 				SetAniState(EAniState::W_Attack);
 
 				//AimingAttack();
-				CurPlayerData->Bullet -= 1;
+				CurPlayerData->LoadBullet -= 1;
 			    AttackCheck= 0;
 	        }
  
@@ -244,6 +272,9 @@ void APortfolio_Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerTurn", EKeys::MouseX, 1.f));
 		UPlayerInput::AddEngineDefinedAxisMapping(FInputAxisKeyMapping("PlayerLookUp", EKeys::MouseY, -1.f));
 
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("item_Get"), EKeys::E));
+
+		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerLoad"), EKeys::R));
 		UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAiming"), EKeys::RightMouseButton));
     	UPlayerInput::AddEngineDefinedActionMapping(FInputActionKeyMapping(TEXT("PlayerAttack"), EKeys::LeftMouseButton));
 
@@ -264,6 +295,9 @@ void APortfolio_Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	PlayerInputComponent->BindAxis("PlayerLookUp", this, &APortfolio_Character::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("PlayerLookUpRate", this, &APortfolio_Character::LookUpAtRate);
 
+	PlayerInputComponent->BindAction("item_Get", EInputEvent::IE_Pressed, this, &APortfolio_Character::item_Get_check);
+
+	PlayerInputComponent->BindAction("PlayerLoad", EInputEvent::IE_Pressed, this, &APortfolio_Character::LoadAction);
 	PlayerInputComponent->BindAction("PlayerAiming", EInputEvent::IE_Pressed , this, &APortfolio_Character::IN_AimingAction);
 	PlayerInputComponent->BindAction("PlayerAiming", EInputEvent::IE_Released, this, &APortfolio_Character::OUT_AimingAction);
 	PlayerInputComponent->BindAction("PlayerAttack", EInputEvent::IE_Pressed, this, &APortfolio_Character::AttackAction);
@@ -437,6 +471,31 @@ void APortfolio_Character::LookUpAtRate(float Rate)
 	AddControllerPitchInput(Rate * BaseLookUpRate * GetWorld()->GetDeltaSeconds() * CustomTimeDilation);
 }
 
+//장전
+void APortfolio_Character::LoadAction()
+{
+	int _LoadBullet = 6 - CurPlayerData->LoadBullet;
+	if (CurPlayerData->LoadBullet <= 5)
+	{
+		if (CurPlayerData->Bullet != 0) 
+		{
+		    SetAniState(EAniState::Load);
+
+			//_LoadBullet = 6 - _LoadBullet ;
+			//_LoadBullet *= -1;
+			for (int i = 1; i < _LoadBullet; i++)
+			{
+				if (CurPlayerData->Bullet != 0)
+				{
+				    CurPlayerData->LoadBullet += 1;
+					CurPlayerData->Bullet -= 1;
+				}
+			}
+		}
+	}
+
+}
+
 //조준
 void APortfolio_Character::IN_AimingAction()
 {
@@ -493,24 +552,14 @@ void APortfolio_Character::AttackAction()
 		AniState = EAniState::W_Attack;
     }
 	*/
-	int _Bullet=0;
 
-	UPortfolio_Widget_Inventory* MyWidget = CreateWidget<UPortfolio_Widget_Inventory>(GetWorld(), UPortfolio_Widget_Inventory::StaticClass());
-	if (MyWidget)
+	int _LoadBullet = CurPlayerData->LoadBullet;
+	if (_LoadBullet != 0 ) 
 	{
-		// 유저위젯 클래스의 변수 설정
-		//MyWidget->MyVariable = 42;
 
-		// 유저위젯 클래스의 변수 읽기
-		int32 WidgetVariableValue = MyWidget->MyVariable;
-		_Bullet += WidgetVariableValue;
-	}
-
-	//int _Bullet = CurPlayerData->Bullet;
-	if (_Bullet != 0 ) 
-	{
 		//Tick에서 공격
 		AttackCheck = 1;
+
 	}
 	return;
 }
@@ -622,13 +671,22 @@ void APortfolio_Character::Crouch()
 	}
 }
 
+void APortfolio_Character::item_Get_check()
+{
+	Item_Get_InputCheck = true;
+}
 
 void APortfolio_Character::AnimationTick()
 {
 
 }
 
-
+/*
+void APortfolio_Character::BulletPlus()
+{
+	CurPlayerData->Bullet += 1;
+}
+*/
 
 /*
 void APortfolio_Character::AimingAttack() 

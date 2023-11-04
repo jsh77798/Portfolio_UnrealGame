@@ -22,6 +22,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	int SetMyCharacter();
 	
+	UFUNCTION(BlueprintCallable)
+	int SetMyCharacter2();
 
 	//YourUserWidget->SetMyCharacter(GetOwningPlayerPawn());
 

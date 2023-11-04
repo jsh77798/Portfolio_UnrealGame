@@ -78,3 +78,11 @@ int UPortfolio_Widget_Main::SetMyCharacter()
 	int _Bullet = MyCharacter->Bullet;
 	return _Bullet;
 }
+
+
+int UPortfolio_Widget_Main::SetMyCharacter2()
+{
+	APortfolio_Character* MyCharacter = Cast<APortfolio_Character>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	int _LoadBullet = MyCharacter->LoadBullet;
+	return _LoadBullet;
+}

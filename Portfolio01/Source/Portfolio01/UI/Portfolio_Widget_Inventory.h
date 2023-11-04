@@ -29,6 +29,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 		int32 MyVariable=0; //캐릭터에서 해당값이용
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int32 CheckBulletNum = 0;
 
 	void AddGameItem(const struct FItemData* Data);
 

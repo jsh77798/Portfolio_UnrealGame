@@ -24,8 +24,8 @@ struct PORTFOLIO01_API FPlayerData : public FTableRowBase
 		int ATT;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		int Bullet = 6;
+		int Bullet = 5;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
-		int SupBullet = 0;
+		int LoadBullet = 0;
 };
