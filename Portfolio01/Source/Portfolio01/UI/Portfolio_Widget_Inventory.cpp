@@ -22,7 +22,6 @@ void UPortfolio_Widget_Inventory::NativeConstruct()
 
 	InvenList = Cast<UTileView>(GetWidgetFromName(TEXT("InvenTileView")));
 
-	// 여기에다가 뭘 넣어줘야 하는지가 내일 배워야할 내용.
 
 	for (size_t i = 0; i < 4; i++)
 	{
@@ -34,7 +33,7 @@ void UPortfolio_Widget_Inventory::NativeConstruct()
 	UPortfolio_GameInstance* GameInstance = GetWorld()->GetGameInstance<UPortfolio_GameInstance>();
 
 	const TArray<UObject*>& Items = InvenList->GetListItems();
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 1; i++)
 	{
 		UInventoryItemData* DataObject = Cast<UInventoryItemData>(Items[i]);
 		DataObject->Data = GameInstance->GetRandomItemData();
@@ -69,6 +68,12 @@ void UPortfolio_Widget_Inventory::NativeTick(const FGeometry& MyGeometry, float 
 	}
 
 
+	for (size_t i = 0; i < 4; i++)
+	{
+		InvenList->GetNumItems();
+	}
+	
+
 }
 
 void UPortfolio_Widget_Inventory::AddInvenItem(UObject* _Data, UUserWidget* _Widget)
@@ -98,7 +103,7 @@ void UPortfolio_Widget_Inventory::AddGameItem(const FItemData* Data)
 	for (size_t i = 0; i < Items.Num(); i++)
 	{
 		UInventoryItemData* DataObject = Cast<UInventoryItemData>(Items[i]);
-
+		
 		if (nullptr == DataObject->Data)
 		{
 			// 데이터까지만 세팅해 놓습니다.
@@ -111,6 +116,8 @@ void UPortfolio_Widget_Inventory::AddGameItem(const FItemData* Data)
 			&& DataObject->Count < Data->StackMax)
 		{
 			++DataObject->Count;
+			++MyVariable;
+			//int Bullet = CurPlayerData->
 			return;
 		}
 	}

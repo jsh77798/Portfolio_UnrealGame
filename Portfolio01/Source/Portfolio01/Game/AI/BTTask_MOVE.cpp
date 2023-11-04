@@ -31,7 +31,7 @@ EBTNodeResult::Type UBTTask_MOVE::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
 
 	if (nullptr != MoveCom)
 	{
-		MoveCom->MaxWalkSpeed = 138.0f;
+		MoveCom->MaxWalkSpeed = 100.0f;
 	}
 
 

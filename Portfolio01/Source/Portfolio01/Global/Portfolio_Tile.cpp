@@ -161,14 +161,11 @@ void APortfolio_Tile::AimingAttack(FVector CameraLoc, FVector CameraForward)
 		EndLoc,
 		ObjectTypes,
 		false,
-		IgnoreActors, // 무시할 것이 없다고해도 null을 넣을 수 없다.
+		IgnoreActors, 
 		EDrawDebugTrace::ForDuration,
 		HitResult,
 		true
-		// 여기 밑에 3개는 기본 값으로 제공됨. 바꾸려면 적으면 됨.
-		//, FLinearColor::Red
-		//, FLinearColor::Green
-		//, 5.0f
+		
 	);
 
 	// 좌측 라인트레이스

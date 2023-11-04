@@ -25,7 +25,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void NewWidget(UUserWidget* _Widget);
 
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+		int32 MyVariable=0; //캐릭터에서 해당값이용
+
+
 	void AddGameItem(const struct FItemData* Data);
+
+	struct FPlayerData* CurPlayerData;
 
 protected:
 	void NativeConstruct() override;

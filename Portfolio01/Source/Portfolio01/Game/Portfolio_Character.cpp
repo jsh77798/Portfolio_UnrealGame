@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "Components/PrimitiveComponent.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
+#include <UI/Portfolio_Widget_Inventory.h>
 
 // Sets default values
 APortfolio_Character::APortfolio_Character()
@@ -19,7 +21,7 @@ APortfolio_Character::APortfolio_Character()
 
 	//캐릭터 기본 이동속도 설정
 	MoveCom = Cast<UCharacterMovementComponent>(GetMovementComponent());
-	MoveCom->MaxWalkSpeed = 350.0f; 
+	MoveCom->MaxWalkSpeed = 280.0f; 
 	
 	//Create our components 스프링암 설정
 	//RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
@@ -252,8 +254,9 @@ void APortfolio_Character::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	}
 
 	// 키와 함수를 연결한다
-	// 이 키가 눌리면 이 함수를 실행시켜줘인데.
-	// BindAxis_축일때는 일단 계속 실행시켜줘.
+	// 해당키가 눌리면 이 함수를 실행시킨다
+	// BindAction_축일때는 한번 실행시킨다
+	// BindAxis_축일때는 계속 실행시킨다
 	PlayerInputComponent->BindAxis("PlayerMoveForward", this, &APortfolio_Character::MoveForward);
 	PlayerInputComponent->BindAxis("PlayerMoveRight", this, &APortfolio_Character::MoveRight);
 	PlayerInputComponent->BindAxis("PlayerTurn", this, &APortfolio_Character::AddControllerYawInput);
@@ -285,7 +288,7 @@ void APortfolio_Character::MoveRight(float Val)
 			//달리기 이동
 			if (RunCheck == 1 && AimingActionCheck == 0 && AniStateValue != EAniState::Idle)
 			{
-				MoveCom->MaxWalkSpeed = 420.0f;
+				MoveCom->MaxWalkSpeed = 360.0f;
 				RunZooming = true;
 				SetAniState(Val > 0.f ? EAniState::RightRun : EAniState::LeftRun);
 				return;
@@ -294,7 +297,7 @@ void APortfolio_Character::MoveRight(float Val)
 			//웅크리기 이동
 			if (CrouchCheck == 1)
 			{
-				MoveCom->MaxWalkSpeed = 250.0f;
+				MoveCom->MaxWalkSpeed = 200.0f;
 				SetAniState(Val > 0.f ? EAniState::Crouch_RightMove : EAniState::Crouch_LeftMove);
 				return;
 			}
@@ -303,13 +306,13 @@ void APortfolio_Character::MoveRight(float Val)
 		    {
 			    if (AimingActionCheck == 0) 
 			    {
-			  	    MoveCom->MaxWalkSpeed = 350.0f;
+			  	    MoveCom->MaxWalkSpeed = 280.0f;
 					SetAniState(Val > 0.f ? EAniState::RightMove : EAniState::LeftMove);
 				    return;
 			    }
 			    else 
 			    {
-			    	MoveCom->MaxWalkSpeed = 300.0f;
+			    	MoveCom->MaxWalkSpeed = 230.0f;
 					SetAniState(Val > 0.f ? EAniState::Aiming_RightMove : EAniState::Aiming_LeftMove);
 				    return;
 		  	    }  
@@ -360,7 +363,7 @@ void APortfolio_Character::MoveForward(float Val)
 			//달리기 이동
 			if (RunCheck == 1 && AimingActionCheck == 0 && AniStateValue != EAniState::Idle)
 			{
-				MoveCom->MaxWalkSpeed = 420.0f;
+				MoveCom->MaxWalkSpeed = 360.0f;
 				RunZooming = true;
 				SetAniState(Val > 0.f ? EAniState::ForwardRun : EAniState::BackwardRun);
 				return;
@@ -369,7 +372,7 @@ void APortfolio_Character::MoveForward(float Val)
 			//웅크리기 이동
 			if (CrouchCheck == 1)
 			{
-				MoveCom->MaxWalkSpeed = 250.0f;
+				MoveCom->MaxWalkSpeed = 200.0f;
 				SetAniState(Val > 0.f ? EAniState::Crouch_ForwardMove : EAniState::Crouch_BackwardMove);
 				return;
 			}
@@ -378,13 +381,18 @@ void APortfolio_Character::MoveForward(float Val)
 			{
 				if (AimingActionCheck == 0)
 				{
-					MoveCom->MaxWalkSpeed = 350.0f;
+					MoveCom->MaxWalkSpeed = 280.0f;
 					SetAniState(Val > 0.f ? EAniState::ForwardMove : EAniState::BackwardMove);
 					return;
 				}
 				else
 				{
-					MoveCom->MaxWalkSpeed = 300.0f;
+					MoveCom->MaxWalkSpeed = 230.0f;
+					float a = 60.0f; //타겟암 길이
+					float b = 80.0f; //타겟암 Y축
+					float c = 70.0f; //타겟암 Z축
+					float s = 0.15f; //속력
+					ZoomCheck(&a, &b, &c, &s); //타겟암 설정
 					SetAniState(Val > 0.f ? EAniState::Aiming_ForwardMove : EAniState::Aiming_BackwardMove);
 					return;
 				}
@@ -485,8 +493,20 @@ void APortfolio_Character::AttackAction()
 		AniState = EAniState::W_Attack;
     }
 	*/
-	int _Bullet = CurPlayerData->Bullet;
+	int _Bullet=0;
 
+	UPortfolio_Widget_Inventory* MyWidget = CreateWidget<UPortfolio_Widget_Inventory>(GetWorld(), UPortfolio_Widget_Inventory::StaticClass());
+	if (MyWidget)
+	{
+		// 유저위젯 클래스의 변수 설정
+		//MyWidget->MyVariable = 42;
+
+		// 유저위젯 클래스의 변수 읽기
+		int32 WidgetVariableValue = MyWidget->MyVariable;
+		_Bullet += WidgetVariableValue;
+	}
+
+	//int _Bullet = CurPlayerData->Bullet;
 	if (_Bullet != 0 ) 
 	{
 		//Tick에서 공격
